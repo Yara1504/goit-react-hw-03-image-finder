@@ -3,7 +3,7 @@ import  Button  from "./Button/Button";
 import  ImageGallery  from "./ImageGallery/ImageGallery";
 import  Loader  from "./Loader/Loader";
 import Searchbar from "./Searchbar/Searchbar";
-import { fetchImages } from "API/Api-gallery";
+import fetchImages from "API/Api-gallery";
 
 export default class App extends Component {
   state = {
