@@ -69,6 +69,10 @@ async componentDidUpdate(prevProps, prevState) {
     this.setState({search });
   };
 
+  onMore = () => {
+    this.setState(({ page }) => ({ page: page + 1 }));
+  };
+
   modalWindow = () => {
     this.setState(({ modalWindow }) => ({ modalWindow: !modalWindow }));
   };
@@ -91,6 +95,7 @@ async componentDidUpdate(prevProps, prevState) {
     } = this.state;
 
     const searchImg = this.searchImg;
+    const onMore = this.onMore;
     const openImg = this.openImg;
 
 
