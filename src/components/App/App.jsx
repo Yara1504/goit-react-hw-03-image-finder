@@ -6,7 +6,7 @@ import Button from 'components/Button/Button';
 import Loader from 'components/Loader/Loader';
 import Modal from 'components/Modal/Modal';
 
-class App extends Component {
+   class App extends Component {
   state = {
     search: '',
     page: 1,
@@ -14,23 +14,20 @@ class App extends Component {
     images: [],
     modalWindow: false,
     currentImageUrl: "",
+    error: null,
   };
-
+     
 async componentDidUpdate(prevProps, prevState) {
   const { page, search } = this.state;
-
-  if (search !== prevState.search || page !== prevState.page) {
+  if (search !== prevState.search) {
     try {
-      this.setState({ loading: true });
-
+      this.setState({ loading: true, error: null });
       const { hits } = await fetchImages(search);
-
       const imagesArray = hits.map(hit => ({
         id: hit.id,
         webformatURL: hit.webformatURL,
         largeImageURL: hit.largeImageURL,
       }));
-
       this.setState({
         page: 1,
         images: imagesArray,
@@ -41,19 +38,15 @@ async componentDidUpdate(prevProps, prevState) {
       this.setState(({ loading }) => ({ loading: !loading }));
     }
   }
-
   if (prevState.page !== page && page !== 1) {
     try {
       this.setState(({ loading }) => ({ loading: !loading }));
-
       const { hits } = await fetchImages(search, page);
-
       const imagesArray = hits.map(hit => ({
         id: hit.id,
         webformatURL: hit.webformatURL,
         largeImageURL: hit.largeImageURL,
       }));
-
       this.setState(({ images }) => ({
         images: [...images, ...imagesArray],
       }));
@@ -64,28 +57,22 @@ async componentDidUpdate(prevProps, prevState) {
     }
   }
 }
-
   searchImg = search => {
-    this.setState({search });
+    this.setState({ search, page: 1, images: [], error: null });
   };
-
+     loadMore = () => {
+       this.setState(({ page }) => ({ page: page + 1 }));
+     };
   modalWindow = () => {
     this.setState(({ modalWindow }) => ({ modalWindow: !modalWindow }));
   };
-
-    loadMore = () => {
-    this.setState((state) => ({ page: state.page + 1 }));
-  };
-
   openImg = e => {
     const currentImageUrl = e.target.dataset.large;
-
       this.setState(({ modalWindow }) => ({
         modalWindow: !modalWindow,
         currentImageUrl: currentImageUrl,
       }));
   };
-
   render() {
     const {
       images,
@@ -93,21 +80,15 @@ async componentDidUpdate(prevProps, prevState) {
       modalWindow,
       currentImageUrl,
     } = this.state;
-
     const searchImg = this.searchImg;
+    const loadMore = this.loadMore;
     const openImg = this.openImg;
-
-
     return (
       <>
         <Searchbar onSubmit={searchImg} />
-
         {images && <ImageGallery images={images} openImg={openImg} />}
-
         {loading && <Loader />}
-
-{images.length > 0 && <Button onClick={this.loadMore} />}
-
+        {images.length >= 12 && <Button loadMore={loadMore} />}
         {modalWindow && (
           <Modal
             currentImageUrl={currentImageUrl}
@@ -118,5 +99,4 @@ async componentDidUpdate(prevProps, prevState) {
     );
   }
 }
-
 export default App;
