@@ -69,10 +69,6 @@ async componentDidUpdate(prevProps, prevState) {
     this.setState({search });
   };
 
-  onMore = () => {
-    this.setState(({ page }) => ({ page: page + 1 }));
-  };
-
   modalWindow = () => {
     this.setState(({ modalWindow }) => ({ modalWindow: !modalWindow }));
   };
