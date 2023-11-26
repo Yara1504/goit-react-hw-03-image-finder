@@ -1,9 +1,11 @@
-import { Component } from "react";
+import css from './Button.module.css';
 
-export default function Button({ onClick }) {
-    return (
-        <Button type="button" onClick={onClick}>
-            Load More
-        </Button>
-    )
+function Button({ onMore }) {
+  return (
+    <button className={css.button} type="button" onClick={onMore}>
+      Load more
+    </button>
+  );
 }
+
+export default Button;

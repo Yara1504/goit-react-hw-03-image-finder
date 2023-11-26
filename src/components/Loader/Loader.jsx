@@ -1,14 +1,19 @@
-import { Audio } from 'react-loader-spinner';
 
-export default function Loader () {
-    return (
-  <Audio
-  height="80"
-  width="80"
-  radius="9"
-  color="green"
-  ariaLabel="loading"
-  wrapperClass="wrapper-class"
-/>
-    )
-}
+import { Audio } from 'react-loader-spinner';
+ const Loader = () => {
+  return (
+    <div>
+      <Audio
+        height="100"
+        width="100"
+        color="#4fa94d"
+        ariaLabel="audio-loading"
+        wrapperStyle={{}}
+        wrapperClass="wrapper-class"
+        visible={true}
+      />
+    </div>
+  );
+ };
+
+export default Loader;
