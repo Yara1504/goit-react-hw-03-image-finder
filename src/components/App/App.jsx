@@ -91,7 +91,6 @@ async componentDidUpdate(prevProps, prevState) {
     } = this.state;
 
     const searchImg = this.searchImg;
-    const onMore = this.onMore;
     const openImg = this.openImg;
 
 
